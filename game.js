@@ -24,18 +24,17 @@ function next_sequence() {
     let random_number = Math.floor(Math.random()*4);
     let random_chosen_color = button_colors[random_number];
     game_pattern.push(random_chosen_color);
-    console.log(random_chosen_color)
 
     $("#" + random_chosen_color).fadeIn(220).fadeOut(220).fadeIn(220);
 
-    play_sound(random_chosen_color)
+    play_sound(random_chosen_color);
 
     return random_number
 };
 
 // create the animation when user press a button
 function animate_press(current_color) {
-    $("#" + current_color).addClass("pressed")
+    $("#" + current_color).addClass("pressed");
     setTimeout(function() {
         $("#" + current_color).removeClass("pressed")
     }, 100);
@@ -56,9 +55,22 @@ function check_answer(current_level) {
     
           }
     } else {
-        console.log("wrong");
+        play_sound("wrong");
+        $("body").addClass("game-over");
+        setTimeout(function() {
+            $("body").removeClass("game-over")
+        }, 200);
+        $("h1").text("Game Over, Press Any Key to Restart")
+        start_over();
     }
 }
+
+// function to restart the game
+function start_over() {
+    level_number = 0;
+    game_pattern = [];
+    started = false;
+};
 
 // detect first keystroke and call function next sequence
 
